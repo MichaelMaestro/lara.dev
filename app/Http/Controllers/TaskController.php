@@ -1,17 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Project;
 use App\Task;
+use App\User;
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class TaskController extends Controller
 {
     
 public function index()
   {
-    $tasks = Task::orderBy('created_at', 'asc')->get();
-    return view('tasks.tasks', ['tasks' => $tasks]);
+    $tasks = Task::where('user_id',Auth::user()->id)->get();
+    $projects = Project::where('id',3)->get();
+    
+    return view('tasks.tasks', ['tasks' => $tasks, 'projects'=>$projects]);
 }
 
   public function destroy(Task $task)
@@ -39,6 +46,7 @@ public function create()
 
   $task = new Task;
   $task->name = $request->name;
+  $task->complete = false;
   $task->save();
 
   return redirect('/');
