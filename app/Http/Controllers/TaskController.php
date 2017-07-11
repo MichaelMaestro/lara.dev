@@ -7,9 +7,11 @@ use App\Task;
 use App\User;
 use App\Tag;
 use App\Mail\TaskCreated;
-use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskController extends Controller
 {
@@ -20,11 +22,13 @@ class TaskController extends Controller
 
 	public function index()
 	{
+		
+
 		$tasks = Auth::user()
 		->tasks()
 		->with('project')
 		->with('tags')
-		->get();
+		->paginate(7);
 
 		return view('tasks.tasks', ['tasks' => $tasks]);
 	}

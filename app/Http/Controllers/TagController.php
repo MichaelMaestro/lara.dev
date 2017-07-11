@@ -17,7 +17,7 @@ class TagController extends Controller
 		$tasks = Tag::find($id)
 		->tasks()
 		->with('project')
-		->get();
+		->paginate(7);
 
 		return view('tasks.tags', ['tasks' => $tasks]);
 	}
