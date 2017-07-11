@@ -23,6 +23,7 @@
                     @endforeach
 				</table>
             </div>
+            {{ $tasks->links() }}
 </div>
 
 
