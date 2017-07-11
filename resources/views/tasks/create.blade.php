@@ -13,10 +13,25 @@
 
       <!-- Имя задачи -->
       <div class="form-group">
-        <label for="task" class="col-sm-3 control-label">Задача</label>
+        <div class="col-md-6 col-sm-6">
+          <input type="text" name="name" id="task-name" class="form-control" placeholder="Имя задачи">
+          <select class="form-control" name="project_id">
+            <option selected disabled>Выберите проект</option>
+              @foreach ($projects as $project)
+              <option value="{{ $project->id }}">
+                {{ $project->name }}
+              </option>
+              @endforeach
+          </select>
 
-        <div class="col-sm-6">
-          <input type="text" name="name" id="task-name" class="form-control">
+          <select class="form-control" name="tag_ids[]" multiple>
+            <option selected disabled>Выберите Тэг</option>
+                @foreach($tags as $tag)
+              <option value="{{ $tag->id }}">
+                {{$tag->body}}
+              </option>
+              @endforeach
+          </select>
         </div>
       </div>
 
