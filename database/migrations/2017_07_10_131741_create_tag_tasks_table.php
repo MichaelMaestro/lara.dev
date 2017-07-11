@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserIdInTasksTable extends Migration
+class CreateTagTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddUserIdInTasksTable extends Migration
      */
     public function up()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->integer('user_id')->default(0);
+        Schema::create('tag_task', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('tag_id');
+            $table->integer('task_id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddUserIdInTasksTable extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->dropColumn('user_id');
-        });
+        Schema::dropIfExists('tag_task');
     }
 }

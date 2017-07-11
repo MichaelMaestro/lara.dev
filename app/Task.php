@@ -21,4 +21,15 @@ class Task extends Model
      */
     protected $fillable = ['id', 'name'];
 
+
+    public function project()
+    {
+        return $this->belongsTo('App\Project');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
+
 }

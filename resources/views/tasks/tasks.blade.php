@@ -19,6 +19,7 @@
                     <thead>
                         <th>Задачи</th>
                         <th>&nbsp;</th>
+                      
                     </thead>
 
                     <!-- Table Body -->
@@ -27,11 +28,11 @@
                             <tr>
                                 <!-- Task Name -->
                                 <td class="table-text">
-                                    <div>{{ $task->name }} from
-                                        @foreach ($projects as $project)
-                                          {{ $project->name }} project
-                                        @endforeach   
-                                    </div>
+                                    <div>{{ $task->name }} from {{ $task->project->name }} project </div>
+                                    Tags:<br>
+                                    @foreach($task->tags as $tag)
+                                    <label><a href="/tag/{{$tag->id}}/tasks">#{{$tag->body}}</a></label>
+                                    @endforeach     
                                 </td>
 
                                 <td>
@@ -53,12 +54,11 @@
                                             </form>
                                             @endif
                                         </td>
-                                    </tr>
+                                        
+                                    
                                 </td>
                             </tr>
                         @endforeach
-
-                        
                     </tbody>
                 </table>
             </div>
