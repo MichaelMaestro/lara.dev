@@ -17,7 +17,7 @@
 
                     <!-- Table Headings -->
                     <thead>
-                        <th>Task</th>
+                        <th>Задачи</th>
                         <th>&nbsp;</th>
                     </thead>
 
@@ -27,7 +27,11 @@
                             <tr>
                                 <!-- Task Name -->
                                 <td class="table-text">
-                                    <div>{{ $task->name }}</div>
+                                    <div>{{ $task->name }} from
+                                        @foreach ($projects as $project)
+                                          {{ $project->name }} project
+                                        @endforeach   
+                                    </div>
                                 </td>
 
                                 <td>
@@ -38,7 +42,7 @@
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
                                                 <button type="submit" class="btn btn-danger">
-                                                    <i class="fa fa-trash"></i> Delete
+                                                    <i class="fa fa-trash"></i> Удалить
                                                 </button>
                                             </form>
                                             @if($task->complete!=true)
@@ -53,6 +57,8 @@
                                 </td>
                             </tr>
                         @endforeach
+
+                        
                     </tbody>
                 </table>
             </div>
