@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
  * Show Task Dashboard
  */
 
-Route::get('', 'TasksViewController@show');
+Route::get('', 'TaskController@index');
 
-Route::get('task/{id}', 'TasksCreateController@createView');
+Route::get('task/create', 'TaskController@create');
 
-Route::post('/task', 'TasksCreateController@create');
+Route::post('/task', 'TaskController@store');
 
-Route::delete('/task/{task}', 'TasksDeleteController@delete');
+Route::delete('/task/{task}', 'TaskController@destroy');
+
+Route::patch('/task/{task}', 'TaskController@update');

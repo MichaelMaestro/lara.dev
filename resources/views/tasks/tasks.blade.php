@@ -40,8 +40,14 @@
                                                 <button type="submit" class="btn btn-danger">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
-                                                <a href="/task/check">Выполненно</a>
                                             </form>
+                                            @if($task->complete!=true)
+                                            <form action="{{ url('task/'.$task->id) }}" method="POST">
+                                            {{ csrf_field() }}
+                                            {{ method_field('PATCH') }}
+                                            <input type="submit" class="btn" value="Выполнить">
+                                            </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 </td>
