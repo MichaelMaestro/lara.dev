@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Project;
 use App\Task;
 use App\User;
+use App\Tag;
+use App\Mail\TaskCreated;
 use Illuminate\Http\Request;
 use Validator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -36,7 +37,10 @@ class TaskController extends Controller
 
 	public function create()
 	{
-		return view('tasks.create');
+		$projects = Project::all();
+		$tags = Tag::all();
+
+		return view('tasks.create', compact('projects', 'tags'));
 	}
 
 	public function store(Request $request)
@@ -51,11 +55,18 @@ class TaskController extends Controller
 			->withErrors($validator);
 		}
 
+		$user = Auth::user()->email;
+
 		$task = new Task;
 		$task->name = $request->name;
+		$task->user_id = Auth::user()->id;
+		$task->project_id = $request->project_id;
 		$task->complete = false;
 		$task->save();
 
+		$task->tags()->sync($request->tag_ids);
+
+		\Mail::to($user)->send(new TaskCreated($task));
 		return redirect('/');
 	}
 
