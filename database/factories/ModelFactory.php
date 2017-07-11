@@ -10,6 +10,8 @@
 | database. Just tell the factory how a default model should look.
 |
 */
+
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Task::class, function (Faker\Generator $faker) {
     return [
@@ -26,10 +28,9 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
     ];
 });
 
-
-$factory->define(App\TaskProject::class, function (Faker\Generator $faker) {
+$factory->define(App\Tag::class, function (Faker\Generator $faker) {
     return [
-        'task_id'=>rand(1,100),
-        'project_id'=>rand(1,3),
+        'body'=>$faker->word, 
     ];
 });
+
