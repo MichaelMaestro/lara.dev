@@ -8,13 +8,13 @@
     @include('common.errors')
 
     <!-- Форма новой задачи -->
-    <form action="{{ url('task') }}" method="POST" class="form-horizontal">
+    <form action="{{ url('task') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
       {{ csrf_field() }}
 
       <!-- Имя задачи -->
       <div class="form-group">
         <div class="col-md-6 col-sm-6">
-          <input type="text" name="name" id="task-name" class="form-control" placeholder="Имя задачи">
+          <input type="text" name="name" id="task-name" class="form-control" placeholder="Имя задачи" value=" {{$task->id}} ">
           <select class="form-control" name="project_id">
             <option selected disabled>Выберите проект</option>
               @foreach ($projects as $project)
@@ -34,6 +34,9 @@
           </select>
         </div>
       </div>
+
+     
+      <input type="file" accept="image" name="task_images[]" multiple>
 
       <!-- Кнопка добавления задачи -->
       <div class="form-group">
