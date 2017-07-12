@@ -38,7 +38,7 @@
                                 </td>
                                 <td> 
                                     @foreach($task->images as $image)
-                                        <img src="\storage\app\{{ $image->path }}">
+                                        <img src="{{ asset($image->path) }}">
                                     @endforeach  
                                 </td>
                                 <td>
