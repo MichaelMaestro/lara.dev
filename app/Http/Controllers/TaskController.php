@@ -73,9 +73,11 @@ class TaskController extends Controller
 		
 		foreach ($request->file('task_images') as $image)
 		{
+            $image->storeAs('public/images', $image->getClientOriginalName());
+
 			$images = new TaskImage;
 			$images->task_id = $task->id;
-			$images->path = $image->storeAs('images', $image->getClientOriginalName());
+			$images->path = 'storage/images/'.$image->getClientOriginalName();
 			$images->save();
 		}
 		
