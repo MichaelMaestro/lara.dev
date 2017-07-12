@@ -32,9 +32,15 @@
                                     Tags:<br>
                                     @foreach($task->tags as $tag)
                                     <label><a href="/tag/{{$tag->id}}/tasks">#{{$tag->body}}</a></label>
-                                    @endforeach     
-                                </td>
+                                    @endforeach  
 
+                                   
+                                </td>
+                                <td> 
+                                    @foreach($task->images as $image)
+                                        <img src="\storage\app\{{ $image->path }}">
+                                    @endforeach  
+                                </td>
                                 <td>
                                     <tr>
                                         <!-- Delete Button -->
@@ -53,6 +59,9 @@
                                             <input type="submit" class="btn" value="Выполнить">
                                             </form>
                                             @endif
+
+                                           
+
                                         </td>
                                         
                                     

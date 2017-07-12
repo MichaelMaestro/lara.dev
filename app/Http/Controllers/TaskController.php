@@ -7,11 +7,13 @@ use App\Task;
 use App\User;
 use App\Tag;
 use App\Mail\TaskCreated;
+use App\TaskImage;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\UploadedFile;
 
 class TaskController extends Controller
 {
@@ -23,7 +25,6 @@ class TaskController extends Controller
 	public function index()
 	{
 		
-
 		$tasks = Auth::user()
 		->tasks()
 		->with('project')
@@ -69,6 +70,16 @@ class TaskController extends Controller
 		$task->save();
 
 		$task->tags()->sync($request->tag_ids);
+		
+		foreach ($request->file('task_images') as $image)
+		{
+			$images = new TaskImage;
+			$images->task_id = $task->id;
+			$images->path = $image->storeAs('images', $image->getClientOriginalName());
+			$images->save();
+		}
+		
+	
 
 		\Mail::to($user)->send(new TaskCreated($task));
 		return redirect('/');
