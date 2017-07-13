@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Project;
 use App\Task;
 use App\User;
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
+use Intervention\Image\ImageManagerStatic as Image;
+use App\Http\Middleware\CustomTrim;
+
 
 class TaskController extends Controller
 {
@@ -29,6 +33,7 @@ class TaskController extends Controller
 		->tasks()
 		->with('project')
 		->with('tags')
+		->with('images')
 		->paginate(7);
 
 		return view('tasks.tasks', ['tasks' => $tasks]);
@@ -52,10 +57,13 @@ class TaskController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 		'name' => 'required|max:255',
+		'project_id' => 'required|exists:project,id',
+		'tag_ids.*' => 'required|exists:tags,id',
+		'task_images.*' => 'required|image',
 		]);
 
 		if ($validator->fails()) {
-			return redirect('/')
+			return redirect('/task/create')
 			->withInput()
 			->withErrors($validator);
 		}
@@ -70,10 +78,18 @@ class TaskController extends Controller
 		$task->save();
 
 		$task->tags()->sync($request->tag_ids);
+
+
 		
 		foreach ($request->file('task_images') as $image)
 		{
+
             $image->storeAs('public/images', $image->getClientOriginalName());
+            $imageName = $image->getClientOriginalName();
+
+			Image::make(storage_path('app/public/images/'.$imageName))
+				->fit(150,150)
+				->save();
 
 			$images = new TaskImage;
 			$images->task_id = $task->id;

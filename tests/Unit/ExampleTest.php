@@ -13,8 +13,11 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
+    public function test_custom_trim()
     {
-        $this->assertTrue(true);
+    	$spc = "АБВ abc123!  ■";
+    	$trimed = custom_trim($spc);
+
+    	$this->assertEquals("abc123!",$trimed);
     }
 }

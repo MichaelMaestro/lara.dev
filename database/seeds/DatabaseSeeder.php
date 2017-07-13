@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $tasks = factory('App\Task',100)->create();
+       $tasks = factory('App\Task',5)->create();
         factory('App\Project',3)->create();
         $tags = factory('App\Tag',10)->create();
 

@@ -14,7 +14,7 @@
       <!-- Имя задачи -->
       <div class="form-group">
         <div class="col-md-6 col-sm-6">
-          <input type="text" name="name" id="task-name" class="form-control" placeholder="Имя задачи" value="">
+          <input type="text" name="name" id="task-name" class="form-control" placeholder="Имя задачи" required>
           <select class="form-control" name="project_id">
             <option selected disabled>Выберите проект</option>
               @foreach ($projects as $project)
